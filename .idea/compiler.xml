@@ -10,6 +10,7 @@
         <module name="currency-conversion-service" />
         <module name="microservices-spring-cloud" />
         <module name="limits-service" />
+        <module name="eureka-server" />
         <module name="spring-cloud-config-server" />
       </profile>
     </annotationProcessing>
@@ -18,6 +19,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="currency-conversion-service" options="-parameters" />
       <module name="currency-exchange-service" options="-parameters" />
+      <module name="eureka-server" options="-parameters" />
       <module name="limits-service" options="-parameters" />
       <module name="spring-cloud-config-server" options="-parameters" />
     </option>
