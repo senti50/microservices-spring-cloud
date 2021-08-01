@@ -1,0 +1,60 @@
+version: "3.9"
+
+services:
+  currency-exchange:
+    image: 4456890012/microservices-spring-cloud-currency-exchange-service:0.0.1-SNAPSHOT
+    mem_limit: 700m
+    ports:
+    - "8000:8000"
+    networks:
+      - currency-network
+    depends_on:
+      - eureka-server
+    environment:
+      eureka.client.serviceUrl.defaultZone: http://eureka-server:8761/eureka
+      spring.zipkin.baseUrl: http://zipkin-server:9411/
+
+  currency-conversion:
+    image: 4456890012/microservices-spring-cloud-currency-conversion-service:0.0.1-SNAPSHOT
+    mem_limit: 700m
+    ports:
+      - "8100:8100"
+    networks:
+      - currency-network
+    depends_on:
+      - eureka-server
+    environment:
+      eureka.client.serviceUrl.defaultZone: http://eureka-server:8761/eureka
+      spring.zipkin.baseUrl: http://zipkin-server:9411/
+
+  api-gateway:
+    image: 4456890012/microservices-spring-cloud-api-gateway:0.0.1-SNAPSHOT
+    mem_limit: 700m
+    ports:
+      - "8765:8765"
+    networks:
+      - currency-network
+    depends_on:
+      - eureka-server
+    environment:
+      eureka.client.serviceUrl.defaultZone: http://eureka-server:8761/eureka
+      spring.zipkin.baseUrl: http://zipkin-server:9411/
+
+  eureka-server:
+    image: 4456890012/microservices-spring-cloud-eureka-server:0.0.1-SNAPSHOT
+    mem_limit: 700m
+    ports:
+      - "8761:8761"
+    networks:
+      - currency-network
+
+  zipkin-server:
+    image: openzipkin/zipkin
+    mem_limit: 500m
+    ports:
+      - "9411:9411"
+    networks:
+      - currency-network
+
+networks:
+  currency-network:
